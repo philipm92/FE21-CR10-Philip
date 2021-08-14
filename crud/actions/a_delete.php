@@ -2,12 +2,12 @@
 require_once 'db_connect.php';
 
 if ($_POST) {
-    $id = $_POST['id'];
+    $ISBN = $_POST['ISBN'];
     $picture = $_POST['image'];
-    ($picture =="product.jpg")?: unlink("../pictures/$picture");
+    ($picture =="default_image.jpg")?: unlink("../pictures/$picture");
 
-    $sql = "DELETE FROM dishes WHERE dishID = {$id}";
-    if (mysqli_query($connect, $sql) === TRUE) {
+    $sql = "DELETE FROM library WHERE ISBN = '{$ISBN}';";
+    if (mysqli_multi_query($connect, $sql) === TRUE) {
         $class = "success";
         $message = "Successfully Deleted!";
     } else {

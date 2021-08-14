@@ -1,16 +1,24 @@
 <?php
 require_once 'actions/db_connect.php';
 
-if ($_GET['id']) {
-    $id = $_GET['id'];
-    $sql = "SELECT * FROM dishes WHERE dishID = {$id}";
+if ($_GET['ISBN']) {
+    $ISBN = $_GET['ISBN'];
+    $sql = "SELECT * FROM library WHERE ISBN = '{$ISBN}'";
     $result = mysqli_query($connect, $sql);
     if (mysqli_num_rows($result) == 1) {
+        // image, title, type, short_description as 'description', publish_date as 'published', publisher_name AS 'publisher', publisher_address AS 'address'
         $data = mysqli_fetch_assoc($result);
-        $name = $data['name'];
-        $price = $data['price'];
-        $description = $data['description'];
+        $title = $data['title'];
+        $type = $data['type'];
+        $status = $data['status'];
+        $description = $data['short_description'];
+        $published = $data['publish_date'];
+        $publisher = $data['publisher_name']; 
+        $publisher_address = $data['publisher_address']; 
         $picture = $data['image'];
+        $author_firstname = $data['author_first_name'];
+        $author_lastname = $data['author_last_name'];
+
     } else {
         header("location: error.php");
     }
@@ -23,41 +31,90 @@ if ($_GET['id']) {
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Edit Product</title>
+        <title>Edit Media</title>
         <?php require_once 'components/boot.php'?>
         <link href="components/style.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         <fieldset>
             <div class="d-flex flex-column justify-content-center align-items-center">
-                <legend class='h2 text-center'>Update request</legend>
-                <img class='img-fluid img-thumbnail rounded-circle m-2' src='pictures/<?php echo $picture ?>' alt="<?php echo $name ?>">
+                <h2 class="text-center">Update request</h2>
+                <img class='img-fluid img-thumbnail m-2' src='pictures/<?php echo $picture ?>' alt="<?php echo $title ?>">
             </div>
             <form action="actions/a_update.php"  method="post" enctype="multipart/form-data">
-                <table class="table">
-                    <tr>
-                        <th>Name</th>
-                        <td><input class="form-control" type="text"  name="name" placeholder ="Product Name" value="<?php echo $name ?>"  /></td>
-                    </tr>
-                    <tr>
-                        <th>Price</th>
-                        <td><input class="form-control" type= "number" name="price" step="any"  placeholder="Price" value ="<?php echo $price ?>" /></td>
-                    </tr>
-                    <tr>
-                        <th>Description</th>
-                        <td><input class="form-control" type= "text" name="description" placeholder="Description" value ="<?php echo $description ?>" /></td>
-                    </tr>                    
-                    <tr>
-                        <th>Picture</th>
-                        <td><input class="form-control" type="file" name= "image" /></td>
-                    </tr>
-                    <tr>
-                        <input type= "hidden" name= "id" value= "<?php echo $data['dishID'] ?>" />
-                        <input type= "hidden" name= "image" value= "<?php echo $data['image'] ?>" />
-                        <td><a href= "index.php"><button class="btn btn-warning" type="button"><< Go Back</button></a></td>
-                        <td><button class="btn btn-success" type= "submit">Save Changes</button></td>
-                    </tr>
-                </table>
+                <div class="table-responsive mx-auto w-75">
+                    <table class='table table-hover table-striped mx-auto'>
+                        <tr>
+                            <th>ISBN</th>
+                            <td><input class="form-control" type="text" name="ISBN" placeholder="ISBN" value="<?php echo $ISBN ?>" /></td>
+                        </tr> 
+                        
+                        <tr>
+                            <th>Title</th>
+                            <td><input class="form-control" type="text" name="title" placeholder="Media Title" value="<?php echo $title ?>" /></td>
+                        </tr> 
+
+                        <tr>
+                            <th>Type</th>
+                            <td style="text-align:left;">
+                                <select name="type">
+                                    <option value = "Book" selected>Book</option>
+                                    <option value = "CD">CD</option>
+                                    <option value = "DVD">DVD</option>
+                                </select>
+                            </td>
+                        </tr> 
+
+                        <tr>
+                            <th>Description</th>
+                            <td><input class="form-control" type="text" name="short_description" placeholder="Short description" value="<?php echo $description ?>" /></td>
+                        </tr>
+
+                        <tr>
+                            <th>Author first name</th>
+                            <td><input class="form-control" type="text" name="author_first_name" placeholder="Author first name" value="<?php echo $author_firstname ?>" /></td>
+                        </tr> 
+
+                        <tr>
+                            <th>Author last name</th>
+                            <td><input class="form-control" type="text" name="author_last_name" placeholder="Author last name" value="<?php echo $author_lastname ?>" /></td>
+                        </tr> 
+
+                        <tr>
+                            <th>Publish Date</th>
+                            <td><input class="form-control" type="date" name="publish_date" placeholder="Publish date" value="<?php echo $published ?>" /></td>
+                        </tr> 
+
+                        <tr>
+                            <th>Publisher</th>
+                            <td><input class="form-control" type="text" name="publisher_name" placeholder="Publisher name" value="<?php echo $publisher ?>" /></td>
+                        </tr> 
+
+                        <tr>
+                            <th>Publisher Address</th>
+                            <td><input class="form-control" type="text" name="publisher_address" placeholder="Publisher address" value="<?php echo $publisher_address ?>" /></td>
+                        </tr>
+                        
+                        <tr>
+                            <th>Availability</th>
+                            <td style="text-align:left;">
+                                <label>Available</label> <input type="radio" name="status" value='available' checked="checked" />
+                                <label>Reserved</label> <input type="radio" name="status" value='reserved' />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>Picture</th>
+                            <td><input class="form-control" type="file" name= "image" /></td>
+                        </tr>
+                        <tr>
+                            <input type= "hidden" name= "ISBN" value = "<?php echo $data['ISBN'] ?>" />
+                            <input type= "hidden" name= "image" value = "<?php echo $data['image'] ?>" />
+                            <td><a href= "index.php"><button class="btn btn-warning" type="button"><< Go Back</button></a></td>
+                            <td><button class="btn btn-success" type= "submit">Save Changes</button></td>
+                        </tr>
+                    </table>
+                </div>
             </form>
         </fieldset>
     </body>

@@ -3,28 +3,52 @@ require_once 'db_connect.php';
 require_once 'file_upload.php';
 
 if ($_POST) {   
-    $name = $_POST['name'];
-    $price = $_POST['price'];
-    $description = $_POST['description'];
-    $uploadError = '';
+    $author_firstname = $_POST["author_firstname"];
+    $author_lastname = $_POST["author_lastname"];
+    $publisher = $_POST["publisher"];
+    $publisher_address = $_POST["publisher_address"];
+    $ISBN = $_POST["ISBN"];
+    $title = $_POST["title"];
+    $type = $_POST["type"];
+    $description = $_POST["description"];
+    $publish_date = $_POST["publish_date"];
     //this function exists in the service file upload.
-    $picture = file_upload($_FILES['image']);  
-   
-    $sql = "INSERT INTO dishes (name, price, description, image) VALUES ('$name', $price, '$description', '$picture->fileName')";
+    $picture = file_upload($_FILES["image"]);
+    $availability = $_POST["availability"];
+    $uploadError = '';
+    echo "$author_firstname $publisher";
+    $sql = "
+    INSERT INTO `library`(`ISBN`, `title`, `type`, `short_description`, `author_first_name`, `author_last_name`, 
+    `publisher_name`, `publisher_address`, `publish_date`, `status`, `image`) 
+    VALUES 
+    ('$ISBN','$title','$type','$description','$author_firstname','$author_lastname',
+    '$publisher','$publisher_address','$publish_date','$availability','$picture->fileName')
 
+    ";
+
+    // $valid_queries = mysqli_query($connect, $add_media) && mysqli_query($connect, $add_author) && mysqli_query($connect, $add_author);
     if (mysqli_query($connect, $sql)) {
         $class = "success";
-        $message = "The entry below was successfully created <br>
-            <table class='table w-50'><tr>
-            <td> $name </td>
-            <td> $description </td>
-            <td> $price </td>
-            </tr></table><hr>";
+        $message = "<p class='text-center'>The entry below was successfully created</p>
+        <div class='table-responsive'>
+            <table class='table table-hover table-striped w-50 mx-auto'>
+            <tr>";
+        foreach($_POST as $key => $value) $message .= "<td>$value</td>";
+        $message .= "
+                    </tr>
+                    </table>
+                </div><hr>";
+
+
+        
+                
     } else {
         $class = "danger";
-        $message = "Error while creating record. Try again: <br>" . $connect->error;
+        $message = "Error while creating record. Try again: <br />" . $connect->error;
     }
+
     $uploadError = ($picture->error != 0) ? $picture->ErrorMessage :'';
+
     mysqli_close($connect);
 } else {
     header("location: ../error.php");

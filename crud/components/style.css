@@ -11,12 +11,7 @@ html, body {
 fieldset {
   margin: auto;
   margin-top: 100px;
-  width: 70%;
-}
-
-.img-thumbnail {
-  width: 192px !important;
-  height: 128px !important;
+  width: 75%;
 }
 
 .manageProduct {
@@ -24,18 +19,18 @@ fieldset {
 }
 
 .img-thumbnail {
-  width: 192px !important;
-  height: 128px !important;
+  width: 20%;
+  height: auto;
 }
 
 td {
-  text-align: left;
+  text-align: center;
   vertical-align: middle;
 }
 
 td img {
-  -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-          box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+          box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 tr {

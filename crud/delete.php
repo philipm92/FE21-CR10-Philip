@@ -1,15 +1,15 @@
 <?php 
 require_once 'actions/db_connect.php';
 
-if ($_GET['id']) {
-    $id = $_GET['id'];
-    $sql = "SELECT * FROM dishes WHERE dishID = {$id}" ;
+if ($_GET) {
+    $ISBN = $_GET['ISBN'];   
+    echo $sql = "SELECT * FROM library WHERE ISBN = '{$ISBN}'" ;
     $result = mysqli_query($connect, $sql);
     $data = mysqli_fetch_assoc($result);
     if (mysqli_num_rows($result) == 1) {
-        $name = $data['name'];
-        $price = $data['price'];
-        $description = $data['description'];
+        $title = $data["title"];
+        $publisher = $data["publisher_name"];
+        $author = $data["author_first_name"]. " " . $data["author_last_name"];
         $picture = $data['image'];
     } else {
         header("location: error.php");
@@ -33,19 +33,22 @@ if ($_GET['id']) {
         <fieldset>
             <div class="d-flex flex-column justify-content-center align-items-center">
                 <legend class='h2 mb-3 text-center'>Delete request</legend>
-                <img class='img-thumbnail rounded-circle' src='pictures/<?php echo $picture ?>' alt="<?php echo $name ?>">
+                <img class='img-thumbnail rounded-circle' src='pictures/<?php echo $picture ?>' alt="<?php echo $title ?>">
                 <h5>You have selected the data below:</h5>
-                <table class="table table-responsive w-75 mt-3 d-flex flex-column justify-content-center">
-                    <tr>
-                        <td><?php echo $name?></td>
-                        <td><?php echo $price?></td>
-                        <td><?php echo $description?></td>
-                    </tr>
-                </table>
+                <div class="table-responsive w-75 mx-auto">
+                    <table class='table table-hover table-striped mx-auto'>
+                        <tr>
+                            <td><?php echo $title ?></td>
+                            <td><?php echo $ISBN ?></td>
+                            <td><?php echo $publisher ?></td>
+                            <td><?php echo $author ?></td>
+                        </tr>
+                    </table>
+                </div>
 
                 <h3 class="mb-4">Do you really want to delete this product?</h3>
                 <form action ="actions/a_delete.php" method="post">
-                    <input type="hidden" name="id" value="<?php echo $id ?>" />
+                    <input type="hidden" name="ISBN" value="<?php echo $ISBN ?>" />
                     <input type="hidden" name="image" value="<?php echo $picture ?>" />
                     <button class="btn btn-danger" type="submit">Yes, delete it!</button>
                     <a href="index.php"><button class="btn btn-warning" type="button">No, go back!</button></a>
