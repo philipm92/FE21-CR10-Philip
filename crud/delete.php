@@ -3,7 +3,7 @@ require_once 'actions/db_connect.php';
 
 if ($_GET) {
     $ISBN = $_GET['ISBN'];   
-    echo $sql = "SELECT * FROM library WHERE ISBN = '{$ISBN}'" ;
+    $sql = "SELECT * FROM library WHERE ISBN = '{$ISBN}'" ;
     $result = mysqli_query($connect, $sql);
     $data = mysqli_fetch_assoc($result);
     if (mysqli_num_rows($result) == 1) {

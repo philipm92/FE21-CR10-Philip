@@ -96,12 +96,9 @@ if ($_GET['ISBN']) {
                             <th>Availability</th>
                             <td class="<?php echo $status_class ?>"><?php echo $status ?></td>
                         </tr>
-
-                        <tr>
-                            <td colspan="2" class="text-center"><a href= "index.php"><button class="btn btn-warning" type="button"><< Go Back</button></a></td>
-                        </tr>
                     </table>
             </div>
+            <a href= "index.php"><button class="btn btn-warning text-center" type="button"><< Go Back</button></a>
 
         </fieldset>
     </body>

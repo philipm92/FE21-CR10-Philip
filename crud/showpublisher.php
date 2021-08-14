@@ -11,7 +11,7 @@ if ($_GET['publisher_name']) {
             $tbody .= "
             <tr>
                 <td>" .$row['ISBN']."</td>
-                <td><img class='img-fluid img-thumbnail' src='pictures/" .$row['image']."'</td>
+                <td><img class='img-thumbnail img-fluid m-2' src='pictures/" .$row['image']."'</td>
                 <td>" .$row['title']."</td>
                 <td>" .$row['type']."</td>
                 <td style='text-align:justify;'><q>" .$row['short_description']."</q></td>

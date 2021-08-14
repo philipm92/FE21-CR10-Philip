@@ -16,7 +16,6 @@ if ($_POST) {
     $picture = file_upload($_FILES["image"]);
     $availability = $_POST["availability"];
     $uploadError = '';
-    echo "$author_firstname $publisher";
     $sql = "
     INSERT INTO `library`(`ISBN`, `title`, `type`, `short_description`, `author_first_name`, `author_last_name`, 
     `publisher_name`, `publisher_address`, `publish_date`, `status`, `image`) 

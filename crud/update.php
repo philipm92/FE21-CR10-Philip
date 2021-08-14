@@ -5,6 +5,11 @@ if ($_GET['ISBN']) {
     $ISBN = $_GET['ISBN'];
     $sql = "SELECT * FROM library WHERE ISBN = '{$ISBN}'";
     $result = mysqli_query($connect, $sql);
+    $html_status_string = ""; // collect correct status as active
+    $html_type_string = ""; // collect correct type as active
+    // maybe could've gotten keys from overall table elements' column?
+    $status_array = ["available", "reserved"];
+    $type_array = ["Book", "CD", "DVD"]; 
     if (mysqli_num_rows($result) == 1) {
         // image, title, type, short_description as 'description', publish_date as 'published', publisher_name AS 'publisher', publisher_address AS 'address'
         $data = mysqli_fetch_assoc($result);
@@ -18,6 +23,16 @@ if ($_GET['ISBN']) {
         $picture = $data['image'];
         $author_firstname = $data['author_first_name'];
         $author_lastname = $data['author_last_name'];
+        # is there a better way????
+        foreach($status_array as $value) {
+            $isChecked = ($value == $status) ? "checked" : "";
+            $html_status_string .= "<label>".ucfirst($value)."</label> <input type='radio' name='status' value='".$value."' ".$isChecked." /> ";
+        }
+        
+        foreach ($type_array as $value) {
+            $isSelected = ($value == $type) ? "selected" : "";
+            $html_type_string .= "<option value='".$value."' ".$isSelected.">".$value."</option>";
+        }
 
     } else {
         header("location: error.php");
@@ -58,9 +73,7 @@ if ($_GET['ISBN']) {
                             <th>Type</th>
                             <td style="text-align:left;">
                                 <select name="type">
-                                    <option value = "Book" selected>Book</option>
-                                    <option value = "CD">CD</option>
-                                    <option value = "DVD">DVD</option>
+                                    <?php echo $html_type_string ?>
                                 </select>
                             </td>
                         </tr> 
@@ -98,8 +111,7 @@ if ($_GET['ISBN']) {
                         <tr>
                             <th>Availability</th>
                             <td style="text-align:left;">
-                                <label>Available</label> <input type="radio" name="status" value='available' checked="checked" />
-                                <label>Reserved</label> <input type="radio" name="status" value='reserved' />
+                                <?php echo $html_status_string; ?>
                             </td>
                         </tr>
 

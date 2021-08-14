@@ -15,12 +15,10 @@ if ($_POST) {
     $author_lastname = $_POST['author_last_name'];    
     //variable for upload pictures errors is initialized
     $uploadError = '';
-
     $picture = file_upload($_FILES['image']); //file_upload() called  
-    echo "<pre>".var_dump($picture)."</pre>";
 
     if($picture->error===0){
-        ($_POST["image"]=="product.png")?: unlink("../pictures/$_POST[image]");
+        ($_POST["image"]=="default_image.png") ?: unlink("../pictures/$_POST[image]");
         $sql = "
         UPDATE `library` SET `ISBN`='$ISBN',`title`='$title',`type`='$type',`short_description`='$description',
         `author_first_name`='$author_firstname',`author_last_name`='$author_lastname',`publisher_name`='$publisher',
@@ -34,13 +32,14 @@ if ($_POST) {
         `publisher_address`='$publisher_address',`publish_date`='$published',`status`='$status'
         WHERE `ISBN`='$ISBN';
         ";
-    }    
+    }
+
     if (mysqli_query($connect, $sql)) {
         $class = "success";
         $message = "The record was successfully updated";
     } else {
         $class = "danger";
-        $message = "Error while updating record : <br>" . mysqli_connect_error();
+        $message = "Error while updating record : <br />" . mysqli_connect_error();
     }
     $uploadError = ($picture->error !=0)? $picture->ErrorMessage :'';
     mysqli_close($connect);    

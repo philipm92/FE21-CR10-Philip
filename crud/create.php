@@ -16,12 +16,12 @@
                     <table class='table table-hover table-striped mx-auto'>
                         <tr>
                             <th>ISBN</th>
-                            <td><input value="1234" class='form-control' type="text" name="ISBN" placeholder="ISBN" /></td>
+                            <td><input class='form-control' type="text" name="ISBN" placeholder="ISBN" /></td>
                         </tr> 
                         
                         <tr>
                             <th>Title</th>
-                            <td><input value="1234" class='form-control' type="text" name="title" placeholder="Media Title" /></td>
+                            <td><input class='form-control' type="text" name="title" placeholder="Media Title" /></td>
                         </tr> 
 
                         <tr>
@@ -37,32 +37,32 @@
 
                         <tr>
                             <th>Description</th>
-                            <td><input value="1234" class='form-control' type="text" name= "description" placeholder="Description" /></td>
+                            <td><input class='form-control' type="text" name= "description" placeholder="Description" /></td>
                         </tr>
 
                         <tr>
                             <th>Author first name</th>
-                            <td><input value="1234" class='form-control' type="text" name= "author_firstname" placeholder="Author first name" /></td>
+                            <td><input class='form-control' type="text" name= "author_firstname" placeholder="Author first name" /></td>
                         </tr> 
 
                         <tr>
                             <th>Author last name</th>
-                            <td><input value="1234" class='form-control' type="text" name= "author_lastname" placeholder="Author last name" /></td>
+                            <td><input class='form-control' type="text" name= "author_lastname" placeholder="Author last name" /></td>
                         </tr> 
 
                         <tr>
                             <th>Publish Date</th>
-                            <td><input value="1234" class='form-control' type="date" name= "publish_date" placeholder="Publish Date" /></td>
+                            <td><input class='form-control' type="date" name= "publish_date" placeholder="Publish Date" /></td>
                         </tr> 
 
                         <tr>
                             <th>Publisher</th>
-                            <td><input value="1234" class='form-control' type="text" name= "publisher" placeholder="Publisher" /></td>
+                            <td><input class='form-control' type="text" name= "publisher" placeholder="Publisher" /></td>
                         </tr> 
 
                         <tr>
                             <th>Publisher Address</th>
-                            <td><input value="1234" class='form-control' type="text" name= "publisher_address" placeholder="Publisher Address" /></td>
+                            <td><input class='form-control' type="text" name= "publisher_address" placeholder="Publisher Address" /></td>
                         </tr>
                         
                         <tr>
